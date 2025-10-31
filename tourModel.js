@@ -6,14 +6,15 @@ const tourSchema = new schema(
   {
     name: {
       type: String,
-      // required: [true, 'A tour must have a name.'],
-      // unique: [true, 'A tour name must be unique.'],
+      required: [true, 'A tour must have a name.'],
+      unique: [true, 'A tour name must be unique.'],
     },
     summary: {
       type: String,
     },
     imageCover: {
       type: String,
+       required: [true, 'A tour must have a cover image.'],
     },
     images: [String],
     startDates: [Date],
@@ -35,7 +36,10 @@ const tourSchema = new schema(
         message: 'The value must be either of easy ,medium or difficult',
       },
     },
-    price: Number,
+    price: {
+      type : Number,
+      min:0
+    },
     description: {
       type: String,
       trim: true,
@@ -59,3 +63,4 @@ const tourSchema = new schema(
 const Tour = mongoose.model('Tour', tourSchema);
 
 module.exports = Tour;
+
