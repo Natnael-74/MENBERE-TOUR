@@ -20,20 +20,18 @@ const tourSchema = new schema(
     startDates: [Date],
     duration: {
       type: Number,
-      // min: 5,
-      // max: 30,
+      
     },
     maxGroupSize: {
       type: Number,
-      // min: 5,
-      // max: 30,
+     
     },
     difficulty: {
       type: String,
       required: true,
       enum: {
         values: ['easy', 'medium', 'difficult'],
-        message: 'The value must be either of easy ,medium or difficult',
+        message: 'The value must be either of easy ,medium or difficult.',
       },
     },
     price: {
@@ -48,9 +46,12 @@ const tourSchema = new schema(
       type: Number,
       max: 5,
       min: 1,
+      default:4.5
     },
     ratingsQuantity: {
       type: Number,
+      default:0,
+      min:0
     },
   },
   {
@@ -63,4 +64,5 @@ const tourSchema = new schema(
 const Tour = mongoose.model('Tour', tourSchema);
 
 module.exports = Tour;
+
 
