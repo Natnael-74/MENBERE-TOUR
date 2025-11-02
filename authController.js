@@ -25,6 +25,7 @@ exports.login = async (res, req, next) => {
   createToken.createToken(user, 200, res);
 };
 
+//forgot password
 exports.forgotPassword= async (req ,res ,next) =>{
     const { email }=req.body;
     const user= await User.find({email});
@@ -34,4 +35,5 @@ exports.forgotPassword= async (req ,res ,next) =>{
     const resetToken=user.resetPassword();
     user.save({validateBeforeSave :false })
 }
+
 
