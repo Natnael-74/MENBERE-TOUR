@@ -25,6 +25,14 @@ exports.login = async (res, req, next) => {
   createToken.createToken(user, 200, res);
 };
 
+//protect middleware
+exports.protect=async (req , res ,next) => {
+  let token;
+  if (req.header.authorization && req.header.authorization.startWith('Bearer'){
+    token=req.header.authorization.split(' ')[1];
+  }else if ()
+}
+
 //forgot password
 exports.forgotPassword= async (req ,res ,next) =>{
     const { email }=req.body;
@@ -35,5 +43,6 @@ exports.forgotPassword= async (req ,res ,next) =>{
     const resetToken=user.resetPassword();
     user.save({validateBeforeSave :false })
 }
+
 
 
