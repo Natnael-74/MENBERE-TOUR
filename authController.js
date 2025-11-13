@@ -44,5 +44,12 @@ exports.forgotPassword= async (req ,res ,next) =>{
     user.save({validateBeforeSave :false })
 }
 
+//reset password
+exports.resetPassword(async (req ,res ,next) => {
+  const token= req.params.token;
+  if (!token){
+    return next(new AppError('No user found ', 400))
+  }
+}
 
 
