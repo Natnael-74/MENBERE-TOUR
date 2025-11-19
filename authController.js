@@ -35,6 +35,14 @@ exports.protect=async (req , res ,next) => {
   }else{
     return new AppError('Please Login again ', 400);
   }
+  const decode=jwt.verify(token ,process.env.SECERT_KEY);
+  const currentUser= await User.find({email : decode.email});
+  if(! currentUser){
+    return new AppError('Please Login again ', 400);
+  }
+
+  
+  req.user=currentUser
 }
 
 //forgot password
@@ -55,6 +63,7 @@ exports.resetPassword(async (req ,res ,next) => {
     return next(new AppError('No user found ', 400))
   }
 }
+
 
 
 
