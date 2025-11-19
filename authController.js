@@ -30,7 +30,11 @@ exports.protect=async (req , res ,next) => {
   let token;
   if (req.header.authorization && req.header.authorization.startWith('Bearer'){
     token=req.header.authorization.split(' ')[1];
-  }else if ()
+  }else if (req.cookie.jwt){
+    token=req.cookie.jwt;
+  }else{
+    return new AppError('Please Login again ', 400);
+  }
 }
 
 //forgot password
@@ -51,5 +55,6 @@ exports.resetPassword(async (req ,res ,next) => {
     return next(new AppError('No user found ', 400))
   }
 }
+
 
 
