@@ -2,13 +2,14 @@ const Review = require('./../model.reviewModel');
 
 exports.getAllreviews = async (req, res) => {
   try {
+    //get all reviews
     const reviews = await Review.find();
 
     res.status(200).json({
       status: 'sucess',
       len: reviews.length,
       data: {
-        reviews,
+        reviews
       },
     });
   } catch (error) {
@@ -19,7 +20,7 @@ exports.getAllreviews = async (req, res) => {
   }
 };
 
-exports.getSinglereview = async (req, res) => {
+exports.getSingleReview = async (req, res) => {
   try {
     const review = await Review.findById(req.params.id);
 
@@ -91,4 +92,5 @@ exports.updateReview = async (req, res) => {
     });
   }
 };
+
 
