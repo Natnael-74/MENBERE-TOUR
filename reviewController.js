@@ -25,6 +25,10 @@ exports.getSingleReview = async (req, res) => {
     
     const review = await Review.findById(req.params.id);
 
+      if (! review) {
+      return new AppError('A Review not found.', 400);
+    }
+
     res.status(200).json({
       status: 'sucess',
       data: {
@@ -62,6 +66,10 @@ exports.deleteReview = async (req, res) => {
   try {
     await Review.findByIdAndDelete(req.params.id);
 
+      if (! review) {
+      return new AppError('A Review not found.', 400);
+    }
+
     res.status(204).json({
       status: 'sucess',
       data: {},
@@ -95,6 +103,7 @@ exports.updateReview = async (req, res) => {
     });
   }
 };
+
 
 
 
