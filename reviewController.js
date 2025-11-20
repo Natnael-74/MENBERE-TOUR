@@ -1,4 +1,4 @@
-const Review = require('./');
+const Review = require('./../model.reviewModel');
 
 exports.getAllreviews = async (req, res) => {
   try {
@@ -91,3 +91,4 @@ exports.updateReview = async (req, res) => {
     });
   }
 };
+
