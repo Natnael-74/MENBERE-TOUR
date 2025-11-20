@@ -22,6 +22,7 @@ exports.getAllreviews = async (req, res) => {
 
 exports.getSingleReview = async (req, res) => {
   try {
+    
     const review = await Review.findById(req.params.id);
 
     res.status(200).json({
@@ -42,9 +43,7 @@ exports.getSingleReview = async (req, res) => {
 exports.createReview = async (req, res) => {
   try {
     const review = await Review.create(req.body);
-    // res.jsend.sucess((data = { reviews }), (message = reviews.length));
-
-    // res.jsend.success((statusCode = 201), (data = { Review } = error.message));
+    
     res.status(201).json({
       status: 'sucess',
       data: {
@@ -92,5 +91,6 @@ exports.updateReview = async (req, res) => {
     });
   }
 };
+
 
 
