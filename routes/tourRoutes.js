@@ -1,15 +1,30 @@
-const express = require('express');
-const tourController = require('./../controller/tourController');
+import express from 'express';
+import {
+  getAllTours,
+  createTour,
+  updateTour,
+  deleteTour,
+  getTour,
+  top5CheapTours,
+  premiumTours,
+  getTourStats,
+  getMonthlyPlan,
+} from '../controllers/tourController.js';
 
 const router = express.Router();
 
-router
-  .route('/')
-  .get(tourController.getAllTours)
-  .post(tourController.createTour);
-router
-  .route('/id')
-  .delete(tourController.deleteTour)
-  .patch(tourController.updateTour);
+// Top 5 cheap tours
+router.route('/top-5-cheap').get(top5CheapTours, getAllTours);
 
-module.exports = router;
+// Premium tours (most expensive)
+router.route('/premium-tours').get(premiumTours, getAllTours);
+
+router.route('/tour-stats').get(getTourStats);
+
+router.route('/monthly-plan/:year').get(getMonthlyPlan);
+
+router.route('/').get(getAllTours).post(createTour);
+
+router.route('/:id').get(getTour).patch(updateTour).delete(deleteTour);
+
+export default router;
