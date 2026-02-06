@@ -8,7 +8,7 @@ exports.getAllTours = async (req, res) => {
 
     // res.jsend.success((statusCode = 201), (data = { tour } = error.message));
     res.status(200).json({
-      status: 'sucess',
+      status: 'success',
       len: tours.length,
       data: {
         tours,
@@ -17,7 +17,7 @@ exports.getAllTours = async (req, res) => {
   } catch (error) {
     res.status(400).json({
       status: 'fail',
-      messgae: error.message,
+      message: error.message,
     });
   }
 };
