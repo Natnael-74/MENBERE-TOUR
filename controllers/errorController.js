@@ -65,5 +65,5 @@ const errorHandler=(err ,req ,res ,next)=>{
     if (error.name==='TokenExpiredError') error=handleJWTExpiredError();
     sendErrorProd(error ,req ,res); 
 }
-
+}
 module.exports=errorHandler;
