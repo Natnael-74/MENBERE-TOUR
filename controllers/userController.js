@@ -1,103 +1,110 @@
-const User = require('./../model/user');
+import catchAsync from '../utils/catchAsync.js';
+import AppError from '../utils/appError.js';
+import User from '../models/userModel.js';
+import { getAll, getOne, updateOne, deleteOne } from './handleFactory.js';
 
-exports.getAllUsers = async (req, res) => {
-  try {
-    const users = await User.find();
-    // res.jsend.sucess((data = { users }), (message = users.length));
-
-    // res.jsend.success((statusCode = 201), (data = { User } = error.message));
-    res.status(200).json({
-      status: 'sucess',
-      len: users.length,
-      data: {
-        users,
-      },
-    });
-  } catch (error) {
-    res.status(400).json({
-      status: 'fail',
-      messgae: error.message,
-    });
-  }
+const filterObj = (obj, ...allowedFields) => {
+  const newObj = {};
+  Object.keys(obj).forEach((el) => {
+    if (allowedFields.includes(el)) newObj[el] = obj[el];
+  });
+  return newObj;
 };
 
-exports.getSingleUser = async (req, res) => {
-  try {
-    const user = await User.findById(req.params.id);
-    // res.jsend.sucess((data = { Users }), (message = Users.length));
+export const getAllUsers = getAll(User);
 
-    // res.jsend.success((statusCode = 201), (data = { User } = error.message));
-    res.status(200).json({
-      status: 'sucess',
-      data: {
-        user,
-      },
-    });
-  } catch (error) {
-    res.status(400).json({
-      status: 'fail',
-      messgae: error,
-    });
+export const getUser = getOne(User);
+
+export const createUser = catchAsync(async (req, res, next) => {
+  res.status(500).json({
+    status: 'error',
+    message: 'This route is not defined! Please use /signup instead',
+  });
+});
+
+export const updateUser = updateOne(User);
+
+export const deleteUser = deleteOne(User);
+
+export const updateMe = catchAsync(async (req, res, next) => {
+  // 1) Prevent password updates here
+  if (req.body.password || req.body.passwordConfirm) {
+    return next(
+      new AppError(
+        'This route is not for password updates. Please use /updateMyPassword route instead.',
+        400,
+      ),
+    );
   }
-};
 
-exports.createUser = async (req, res) => {
-  try {
-    const user = await User.create(req.body);
-    // res.jsend.sucess((data = { Users }), (message = Users.length));
+  // 2) Update allowed fields
+  const updatedUser = await User.findByIdAndUpdate(
+    req.user.id,
+    filterObj(req.body, 'name', 'email'),
+    { new: true, runValidators: true },
+  );
 
-    // res.jsend.success((statusCode = 201), (data = { User } = error.message));
-    res.status(201).json({
-      status: 'sucess',
-      data: {
-        user,
-      },
-    });
-  } catch (error) {
-    res.status(400).json({
-      status: 'fail',
-      messgae: error.message,
-    });
+  if (!updatedUser) {
+    return next(new AppError('User not found', 404));
   }
-};
 
-exports.deleteUser = async (req, res) => {
-  try {
-    await User.findByIdAndDelete(req.params.id);
-    // res.jsend.sucess((data = { Users }), (message = Users.length));
+  // 3) Convert to plain object and remove sensitive/internal fields
+  const userSafe = updatedUser.toObject();
+  delete userSafe.passwordResetToken;
+  delete userSafe.passwordResetExpires;
+  delete userSafe.passwordResetTokenCreatedAt;
+  delete userSafe.passwordChangedAt;
+  delete userSafe.__v;
 
-    // res.jsend.success((statusCode = 201), (data = { User } = error.message));
-    res.status(204).json({
-      status: 'sucess',
-      data: {},
-    });
-  } catch (error) {
-    res.status(400).json({
-      status: 'fail',
-      messgae: error.message,
-    });
+  res.status(200).json({
+    status: 'success',
+    message: 'User data updated successfully',
+    data: { user: userSafe },
+  });
+});
+
+export const deleteMe = catchAsync(async (req, res, next) => {
+  const deactivatedUser = await User.findByIdAndUpdate(
+    req.user.id,
+    { active: false },
+    { new: true },
+  );
+
+  if (!deactivatedUser) {
+    return next(new AppError('User not found', 404));
   }
-};
 
-exports.updateUser = async (req, res) => {
-  try {
-    const user = await User.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-      runValidators: true,
-    });
-    // res.jsend.sucess((data = { Users }), (message = Users.length));
+  res.status(204).json({
+    status: 'success',
+    message: 'User deactivated successfully',
+  });
+});
 
-    // res.jsend.success((statusCode = 201), (data = { User } = error.message));
-    res.status(200).json({
-      status: 'sucess',
-      data: {
-        user,
-      },
-    });
-  } catch (error) {
-    res.status(400).json({
-      status: 'fail',
-      messgae: error.message,
-    });
-  }
-};
+export const findDeactivatedUsers = catchAsync(async (req, res, next) => {
+  const users = await User.find({ active: { $eq: false } }).select('+active');
+
+  res.status(200).json({
+    status: 'success',
+    results: users.length,
+    data: {
+      users,
+    },
+  });
+});
+
+export const getAdmins = catchAsync(async (req, res, next) => {
+  const admins = await User.find({ role: 'admin' });
+
+  res.status(200).json({
+    status: 'success',
+    results: admins.length,
+    data: {
+      admins,
+    },
+  });
+});
+
+export const getMe = catchAsync(async (req, res, next) => {
+  req.params.id = req.user.id;
+  next();
+});
