@@ -11,7 +11,7 @@ import {
   getMonthlyPlan,
 } from '../controllers/tourController.js';
 
-const router = express.Router();
+const router = express.Router({ mergeParams: true });
 
 // Top 5 cheap tours
 router.route('/top-5-cheap').get(top5CheapTours, getAllTours);
