@@ -1,69 +1,73 @@
-const AppError=require('../utils/AppError');
+import AppError from '../utils/appError.js';
 
-const handleCastErrorDB=err=>{
-  const message=`Invalid ${err.path}:${err.value}.`;
-  return new AppError(message ,400);
-}
+const HandleCastErrorDB = (err) => {
+  const message = `Invalid ${err.path}: ${err.value}.`;
+  return new AppError(message, 400);
+};
 
-const handleDuplicateFieldsDB=err=>{
-  const value=err.errmsg.match(/(["'])(\\?.)*?\1/)[0];
-  const message=`Duplicate field value:${value}.Please use another value!`;
-  return new AppError(message ,400);
-}
+const HandleDuplicateFieldsDB = (err) => {
+  const value = err.errmsg.match(/(["'])(\\?.)*?\1/)[0];
+  const message = `Duplicate field value: ${value}. Please use another value!`;
+  return new AppError(message, 400);
+};
 
-const handleValidationErrorDB=err=>{
-  const errors=Object.values(err.errors).map(el=>el.message);
-  const message=`Invalid input data.${errors.join('. ')}`;
-  return new AppError(message ,400);
-}
+const HandleValidationErrorDB = (err) => {
+  const errors = Object.values(err.errors).map((el) => el.message);
+  const message = `Invalid input data. ${errors.join('. ')}`;
+  return new AppError(message, 400);
+};
 
-const handleJWTError=()=>{
-  return new AppError('Invalid token.Please log in again!',401);
-}
+const HandleJWTError = () =>
+  new AppError('Invalid token. Please log in again!', 401);
 
-const handleJWTExpiredError=()=>{
-  return new AppError('Your token has expired!Please log in again.',401);
-}
+const HandleJWTExpiredError = () =>
+  new AppError('Your token has expired! Please log in again.', 401);
 
-const sendErrorDev=(err ,req ,res)=>{
+const HandleSyntaxError = () =>
+  new AppError('Invalid JSON syntax. Please check your request body.', 400);
 
-    res.status(err.statusCode).json({
-      status:err.status,
-      error:err,
-      message:err.message,
-      stack:err.stack
+const HandleMulterError = () =>
+  new AppError('File upload error. Please check your file and try again.', 400);
+
+const sendErrorDev = (err, res) => {
+  res.status(err.statusCode || 500).json({
+    status: err.status || 'error',
+    message: err.message,
+    stack: err.stack,
+    error: err,
+  });
+};
+
+const sendErrorProd = (err, res) => {
+  if (err.isOperational) {
+    res.status(err.statusCode || 500).json({
+      status: err.status || 'error',
+      message: err.message,
     });
-
-const sendErrorProd=(err ,req ,res)=>{
-  //Operational ,trusted error:send message to client
-  if (err.isOperational){
-    res.status(err.statusCode).json({
-      status:err.status,
-      message:err.message
-    });
-  }else{
-    //Programming or other unknown error:don't leak error details
-    console.error('ERROR💥',err);
-    res.status(err.statusCode).json({
-      status:err.status,
-      message:'Something went very wrong!'
+  } else {
+    console.error('ERROR 💥', err);
+    res.status(500).json({
+      status: 'error',
+      message: 'Something went wrong on the server.',
     });
   }
 };
 
-const errorHandler=(err ,req ,res ,next)=>{
-  if (process.env.Node_ENV==='development'){
-    sendErrorDev(err ,req ,res);
-   }; 
-  else if (process.env.Node_ENV==='production'){
-    let error={...err};
-    error.message=err.message;  
-    if (error.name==='CastError') error=handleCastErrorDB(error);
-    if (error.code===11000) error=handleDuplicateFieldsDB(error);
-    if (error.name==='ValidationError') error=handleValidationErrorDB(error);
-    if (error.name==='JsonWebTokenError') error=handleJWTError();
-    if (error.name==='TokenExpiredError') error=handleJWTExpiredError();
-    sendErrorProd(error ,req ,res); 
-}
-}
-module.exports=errorHandler;
+const errorController = (err, req, res, next) => {
+  if (process.env.NODE_ENV === 'development') {
+    sendErrorDev(err, res);
+  } else {
+    let error = { ...err };
+    if (err.name === 'CastError') error = HandleCastErrorDB(error);
+    if (err.name === 'ValidationError') error = HandleValidationErrorDB(error);
+    if (err.code === 11000) error = HandleDuplicateFieldsDB(error);
+    if (err.name === 'JsonWebTokenError') error = HandleJWTError();
+    if (err.name === 'TokenExpiredError') error = HandleJWTExpiredError();
+    if (err.name === 'SyntaxError') error = HandleSyntaxError();
+    if (err.name === 'MulterError') error = HandleMulterError();
+
+    sendErrorProd(error, res);
+  }
+};
+
+export default errorController;
