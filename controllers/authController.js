@@ -28,7 +28,7 @@ exports.login = async (res, req, next) => {
 //protect middleware
 exports.protect=async (req , res ,next) => {
   let token;
-  if (req.header.authorization && req.header.authorization.startWith('Bearer'){
+  if (req.header.authorization && req.header.authorization.startWith('Bearer')){
     token=req.header.authorization.split(' ')[1];
   }else if (req.cookie.jwt){
     token=req.cookie.jwt;
@@ -62,8 +62,15 @@ exports.resetPassword(async (req ,res ,next) => {
   if (!token){
     return next(new AppError('No user found ', 400))
   }
+  const decoded=jwt.verify(token ,process.env.SECERT_KEY);
+  const currentUser= await User.find({email : decoded.email});
+  if(! currentUser){
+    return next(new AppError('Please Login again ', 400));
+  }
+  currentUser.password=req.body.password;
+  currentUser.passwordConfirm=req.body.passwordConfirm;
+  await currentUser.save({validateBeforeSave :false });
 }
-
 
 
 
