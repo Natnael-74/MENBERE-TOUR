@@ -33,35 +33,34 @@ class Email {
     });
   }
 
-  // Send the actual email
-//   async send(template, subject) {
-//     const html = pug.renderFile(`${__dirname}/../views/email/${template}.pug`, {
-//       firstName: this.firstName,
-//       url: this.url,
-//       subject,
-//     });
+  async send(template, subject) {
+    const html = pug.renderFile(`${__dirname}/../views/email/${template}.pug`, {
+      firstName: this.firstName,
+      url: this.url,
+      subject,
+    });
 
-//     const mailOptions = {
-//       from: this.from,
-//       to: this.to,
-//       subject,
-//       html,
-//       text: htmlToText.fromString(html),
-//     };
+    const mailOptions = {
+      from: this.from,
+      to: this.to,
+      subject,
+      html,
+      text: htmlToText.fromString(html),
+    };
 
-//     await this.newTransport().sendMail(mailOptions);
-//   }
+    await this.newTransport().sendMail(mailOptions);
+  }
 
-//   async sendWelcome() {
-//     await this.send('welcome', 'Welcome to the Menbere Family!');
-//   }
+  async sendWelcome() {
+    await this.send('welcome', 'Welcome to the Menbere Family!');
+  }
 
-//   async sendPasswordReset() {
-//     await this.send(
-//       'passwordReset',
-//       'Your password reset token (valid for only 10 minutes)',
-//     );
-//   }
-// }
+  async sendPasswordReset() {
+    await this.send(
+      'passwordReset',
+      'Your password reset token (valid for only 10 minutes)',
+    );
+  }
+}
 
 //export default Email;
