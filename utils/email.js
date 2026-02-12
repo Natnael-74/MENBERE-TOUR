@@ -63,4 +63,4 @@ class Email {
   }
 }
 
-//export default Email;
+export default Email;
