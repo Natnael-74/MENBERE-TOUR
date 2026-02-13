@@ -4,19 +4,19 @@ header.header
       .header__logo
         img(src='/img/logo-white.png' alt='Natours logo')
 
-//-   // CENTER SEARCH (only overview)
-//-   if showSearch
-//-     .header__search
-//-       form.search-form(action='/' method='GET')
-//-         input.search-input(
-//-           type='text'
-//-           name='search'
-//-           placeholder='Search tours...'
-//-           value= (typeof query !== 'undefined' ? query : '')
-//-         )
-//-         button.search-btn(type='submit')
-//-           svg
-//-             use(xlink:href='/img/icons.svg#icon-search')
+  // CENTER SEARCH (only overview)
+  if showSearch
+    .header__search
+      form.search-form(action='/' method='GET')
+        input.search-input(
+          type='text'
+          name='search'
+          placeholder='Search tours...'
+          value= (typeof query !== 'undefined' ? query : '')
+        )
+        button.search-btn(type='submit')
+          svg
+            use(xlink:href='/img/icons.svg#icon-search')
 
 //-   nav.nav.nav--user
 //-     if user
