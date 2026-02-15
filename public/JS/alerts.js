@@ -1,5 +1,4 @@
 /* eslint-disable */
-
 let alertTimeout;
 
 export const showAlert = (type, message, time = 5) => {
@@ -20,12 +19,10 @@ export const showAlert = (type, message, time = 5) => {
 
   const alertEl = document.querySelector('.alert');
 
-  // Animate in
   setTimeout(() => {
     alertEl.classList.add('alert--visible');
   }, 10);
 
-  // Auto remove
   alertTimeout = setTimeout(() => {
     hideAlert();
   }, time * 1000);
