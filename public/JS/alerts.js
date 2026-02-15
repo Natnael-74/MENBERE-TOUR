@@ -27,3 +27,16 @@ export const showAlert = (type, message, time = 5) => {
     hideAlert();
   }, time * 1000);
 };
+
+export const hideAlert = () => {
+  const el = document.querySelector('.alert');
+  if (el) {
+    el.classList.remove('alert--visible');
+
+    setTimeout(() => {
+      if (el.parentElement) el.parentElement.removeChild(el);
+    }, 300);
+  }
+
+  if (alertTimeout) clearTimeout(alertTimeout);
+};
