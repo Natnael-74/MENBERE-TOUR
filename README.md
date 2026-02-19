@@ -1,67 +1,147 @@
-# Menbere Tours (Natours)
+# 🌍 Menbere Tours
 
-A full-featured tour booking application built with Node.js, Express, MongoDB, and more.
+A **production-ready full-stack tour booking application** built with **Node.js, Express, MongoDB, and Stripe**.  
+The platform allows users to explore tours, book securely online, leave reviews, and manage their bookings.
+
+> Designed with scalable RESTful architecture, secure authentication, and modern backend best practices.
+
+---
 
 ![Node.js](https://img.shields.io/badge/Node.js-20.x-green)
 ![Express](https://img.shields.io/badge/Express-4.x-blue)
 ![MongoDB](https://img.shields.io/badge/MongoDB-8.0-green)
 ![License](https://img.shields.io/badge/License-ISC-yellow)
 
-## Features
+---
 
-- � Tours listing with search and filtering
-- 👤 User authentication (signup, login, password reset)
-- 📱 Responsive design
+## 🚀 Live Demo
+
+🔗 _Add your deployed link here (Render / Railway / Heroku)_
+
+---
+
+## ✨ Features
+
+- 🗺️ Browse tours with filtering, sorting, and search
+- 👤 User authentication (Signup, Login, Logout)
+- 🔐 Secure password reset via email
 - ⭐ Tour ratings and reviews
-- 🛒 Tour booking with Stripe integration
-- 🔒 Secure payment processing
+- 🛒 Online booking with Stripe integration
+- 💳 Secure payment processing
 - 📧 Email notifications
-- 🎫 Booking management
+- 🎫 Booking management dashboard
+- 📱 Fully responsive design
+- ⚡ RESTful API architecture
 
-## Tech Stack
+---
 
-- **Backend:** Node.js, Express.js
-- **Database:** MongoDB with Mongoose
-- **Authentication:** JWT, bcrypt
-- **Payments:** Stripe
-- **Email:** MailerSend
-- **Frontend:** Pug templates, CSS
-- **Security:** Helmet, express-mongo-sanitize, xss-clean
+## 🛠 Tech Stack
 
-## Installation
+### Backend
+
+- Node.js
+- Express.js
+- MongoDB
+- Mongoose
+
+### Authentication & Security
+
+- JWT (JSON Web Tokens)
+- bcrypt
+- Helmet
+- express-mongo-sanitize
+- xss-clean
+
+### Payments & Email
+
+- Stripe
+- MailerSend (or Mailtrap for development)
+
+### Frontend
+
+- Pug Templates
+- CSS
+- Vanilla JavaScript
+
+---
+
+## 🔐 Security Features
+
+- Password hashing with **bcrypt**
+- JWT-based authentication & authorization
+- Protected routes & role-based access control
+- HTTP security headers with **Helmet**
+- NoSQL injection prevention
+- XSS protection
+- Secure Stripe webhook validation
+- Environment variable configuration
+
+---
+
+## 📡 API Overview
+
+### Tours
+
+GET /api/v1/tours
+POST /api/v1/tours
+PATCH /api/v1/tours/:id
+DELETE /api/v1/tours/:id
+
+### Users
+
+POST /api/v1/users/signup
+POST /api/v1/users/login
+POST /api/v1/users/forgotPassword
+PATCH /api/v1/users/resetPassword/:token
+
+### Reviews
+
+GET /api/v1/reviews
+POST /api/v1/reviews
+
+### Bookings
+
+POST /api/v1/bookings
+GET /api/v1/bookings
+
+---
+
+## 📦 Installation
 
 ### Prerequisites
 
-- Node.js 20.x or higher
-- MongoDB (local or Atlas)
+- Node.js 20+
+- MongoDB (Local or MongoDB Atlas)
 - npm or yarn
 
-### Clone the Repository
+---
+
+### 1️⃣ Clone the Repository
 
 ```bash
 git clone https://github.com/Natnael-74/MENBERE-TOUR.git
 cd MENBERE-TOUR
 ```
 
-### Install Dependencies
+### 2️⃣ Install Dependencies
 
 ```bash
 npm install
 ```
 
-### Configuration
+### 3️⃣ Environment Configuration
 
-Create a `config.env` file in the root directory:
+Create a config.env file in the root directory:
 
 ```env
 NODE_ENV=development
 PORT=3000
 
-# Database (use DATABASE_LOCAL for local MongoDB)
+# Database (MongoDB Atlas)
 DATABASE=mongodb+srv://<username>:<password>@cluster0.xxxxxx.mongodb.net/?appName=Cluster0
 DATABASE_PASSWORD=<your_password>
 
-# Or use local database
+# Local Database (optional)
 DATABASE_LOCAL=mongodb://localhost:27017/Menbere-Tour
 
 # JWT
@@ -72,74 +152,95 @@ JWT_COOKIE_EXPIRES_IN=90
 # Email
 EMAIL_HOST=sandbox.smtp.mailtrap.io
 EMAIL_PORT=2525
-EMAIL_USERNAME=<your_mailtrap_username>
-EMAIL_PASSWORD=<your_mailtrap_password>
+EMAIL_USERNAME=<your_username>
+EMAIL_PASSWORD=<your_password>
 EMAIL_FROM=your_email@example.com
 
-# Stripe (for payments)
+# Stripe
 STRIPE_SECRET_KEY=sk_test_xxx
 ```
 
-### Run the Application
+### 4️⃣ Run the Application
+
+Development mode:
 
 ```bash
-# Development
 npm run start:dev
+```
 
-# Production
+Production mode:
+
+```bash
 npm start
 ```
 
-Visit `http://localhost:3000` in your browser.
+Visit:
 
-### Import Sample Data
+```bash
+http://localhost:3000
+```
+
+### 5️⃣ Import Sample Data
 
 ```bash
 cd dev-data/data
 node importDevData.js --import
 ```
 
-## Project Structure
+To delete data:
+
+```bash
+node importDevData.js --delete
+```
+
+---
+
+## 🗂 Project Structure
 
 ```
 ├── config/
-│   └── env.js              # Environment configuration
 ├── controllers/
-│   ├── authController.js   # Authentication logic
-│   ├── bookingController.js # Booking management
-│   ├── errorController.js  # Error handling
-│   ├── tourController.js   # Tour operations
-│   ├── userController.js   # User management
-│   └── viewsController.js  # View rendering
 ├── models/
-│   ├── bookingModel.js     # Booking schema
-│   ├── reviewModel.js      # Review schema
-│   ├── tourModel.js        # Tour schema
-│   └── userModel.js        # User schema
-├── public/
-│   ├── css/               # Stylesheets
-│   ├── img/               # Images
-│   └── js/                # Frontend JavaScript
 ├── routes/
-│   ├── bookingRoutes.js    # Booking API routes
-│   ├── reviewRoutes.js     # Review API routes
-│   ├── tourRoutes.js      # Tour API routes
-│   ├── userRoutes.js      # User API routes
-│   └── viewRoutes.js      # Page routes
 ├── utils/
-│   ├── APIFeatures.js     # Query features
-│   ├── appError.js       # Custom error class
-│   ├── catchAsync.js      # Async error handler
-│   ├── directory.js       # Directory utilities
-│   ├── email.js           # Email sending
-│   └── signToken.js       # JWT signing
-├── views/                 # Pug templates
-├── dev-data/             # Development data
-├── app.js               # Express app setup
-├── server.js            # Server entry point
-└── package.json         # Dependencies
+├── views/
+├── public/
+├── dev-data/
+├── app.js
+├── server.js
+└── package.json
 ```
 
-## Author
+Architecture follows the MVC (Model–View–Controller) design pattern.
 
-Natnael Endale
+---
+
+## 📸 Screenshots
+
+Add screenshots here once deployed
+
+Example:
+
+![Homepage](./public/img/homepage.png)
+![Tour Details](./public/img/tour.png)
+
+---
+
+## 🧠 What I Learned
+
+- Designing scalable REST APIs
+- Implementing authentication & authorization securely
+- Integrating Stripe payments
+- Handling production vs development environments
+- Writing secure and maintainable backend code
+- Structuring large Express applications professionally
+
+---
+
+## 👨‍💻 Author
+
+**Natnael Endale**
+Software Engineering Student – Addis Ababa University
+MERN Stack Developer | Backend Enthusiast
+
+GitHub: https://github.com/Natnael-74
