@@ -217,12 +217,8 @@ Architecture follows the MVC (Model–View–Controller) design pattern.
 
 ## 📸 Screenshots
 
-Add screenshots here once deployed
-
-Example:
-
-![Homepage](./public/img/home-page.png)
-![Tour Details](./public/img/settings.png)
+![Homepage](https://raw.githubusercontent.com/Natnael-74/MENBERE-TOUR/main/public/img/home-page.png)
+![User Profile](https://raw.githubusercontent.com/Natnael-74/MENBERE-TOUR/main/public/img/settings.png)
 
 ---
 
