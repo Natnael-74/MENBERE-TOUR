@@ -1,0 +1,72 @@
+================================================================================
+INSTALL GIT AND COMMIT YOUR CODE TO GITHUB
+================================================================================
+
+STEP 1: INSTALL GIT
+--------------------
+If you don't have Git installed, download and install from:
+https://git-scm.com/download/win
+
+During installation, choose "Use Git from the Windows Command Prompt"
+
+================================================================================
+
+STEP 2: OPEN NEW TERMINAL
+--------------------------
+Open a NEW terminal/command prompt in your project folder:
+    cd C:\Users\hp\EXPRESS\complete-node-bootcamp-master\4-natours\after-section-06
+
+================================================================================
+
+STEP 3: CHECK GIT STATUS
+-------------------------
+Run this command to see what files are not committed:
+    git status
+
+================================================================================
+
+STEP 4: ADD ALL FILES
+----------------------
+Run this command to stage all files:
+    git add -A
+
+================================================================================
+
+STEP 5: COMMIT FILES
+---------------------
+Run this command to commit all staged files:
+    git commit -m "Complete Natours app - production ready"
+
+================================================================================
+
+STEP 6: PUSH TO GITHUB
+------------------------
+Run this command to push to your GitHub repository:
+    git push origin main
+
+If it asks for username and password:
+- Username: your GitHub username
+- Password: use a Personal Access Token (not your regular password)
+
+================================================================================
+
+WHAT FILES WILL BE COMMITTED:
+-----------------------------
+- All source code (app.js, server.js, models, controllers, routes, etc.)
+- public/ folder (CSS, images, JS)
+- views/ folder (Pug templates)
+- package.json, Procfile
+- .gitignore (updated)
+- DEPLOYMENT_GUIDE.md
+- DEPLOYMENT_STEPS.txt
+- GIT_COMMANDS.txt
+
+WHAT WILL BE IGNORED (not committed):
+-------------------------------------
+- node_modules/
+- config.env (contains secrets)
+- .env files
+- npm-debug.log
+- Any other files in .gitignore
+
+================================================================================

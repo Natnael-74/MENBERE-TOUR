@@ -1,0 +1,41 @@
+extends base
+
+block content
+  section.section-contact
+    .container
+      h1.heading-secondary Contact Us
+      p.contact-intro We're here to help you plan your perfect Ethiopian adventure!
+      
+      .contact-wrapper
+        .contact-info
+          h3 Get in Touch
+          .contact-item
+            span 📧 
+            span natnaelendale898@gmail.com
+          .contact-item
+            span 📞 
+            span +251 936482259
+          .contact-item
+            span 📍 
+            span Addis Ababa, Ethiopia
+          
+          .contact-item
+            span ⏰ 
+            span Mon-Fri: 9AM - 6PM (EAT)
+        
+        .contact-form
+          h3 Send us a Message
+          form.form
+            .form__group
+              label.form__label(for='name') Name
+              input.form__input#name(type='text', placeholder='Your name', required)
+            
+            .form__group
+              label.form__label(for='email') Email
+              input.form__input#email(type='email', placeholder='Your email', required)
+            
+            .form__group
+              label.form__label(for='message') Message
+              textarea.form__input#message(rows='5', placeholder='Tell us about your trip...', required)
+            
+            button.btn.btn--gold Send Message

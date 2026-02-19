@@ -1,0 +1,8 @@
+extends base
+
+block content
+  main.error-page
+    .container
+      h1.error-code= statusCode || 'Error'
+      p.error-message= message || 'Something went wrong!'
+      a.btn.btn--green(href='/') Go Back Home

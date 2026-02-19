@@ -1,0 +1,79 @@
+================================================================================
+STEP-BY-STEP RAILWAY DEPLOYMENT - RUN THESE COMMANDS IN ORDER
+================================================================================
+
+STEP 1: Login to Railway
+-------------------------
+Run this command:
+    railway login
+
+A browser window will open. Click to confirm login.
+After logging in, come back to terminal and run STEP 2.
+
+
+STEP 2: Create Railway Project
+-------------------------------
+Run this command (choose option 1 to create new project when asked):
+    railway init
+
+When it asks for a project name, type: natours
+
+
+STEP 3: Add MongoDB Database
+-----------------------------
+Run this command:
+    railway add mongodb
+
+Press Enter to confirm when asked.
+
+
+STEP 4: Set Environment Variables
+---------------------------------
+Run these commands ONE BY ONE (replace the stuff after = with your values):
+
+    railway variables set NODE_ENV=production
+    railway variables set JWT_SECRET=2a9fcb9425916d159d68b436c0250d6d0a3aa1ca9f54b6747b4dd6e9b58744461e4875de856b240a19dff2ac065eb0f1a01065a73e10644178e17de8b86d0547
+    railway variables set JWT_EXPIRES_IN=90d
+    railway variables set JWT_COOKIE_EXPIRES_IN=90
+    railway variables set EMAIL_FROM=natnaelendale898@gmail.com
+    railway variables set PORT=3000
+
+
+STEP 5: Deploy
+---------------
+Run this command:
+    railway up
+
+Wait for it to finish deploying...
+
+
+STEP 6: Open Your App
+----------------------
+Run this command to get your app URL:
+    railway open
+
+Copy the URL and open it in your browser!
+
+
+================================================================================
+TROUBLESHOOTING
+================================================================================
+
+If STEP 2 doesn't work:
+    - Make sure you logged in successfully in STEP 1
+    - Try: railway init --name natours
+
+If STEP 4 shows error:
+    - The variables might already exist. That's OK!
+    - Continue to STEP 5
+
+If STEP 5 shows error:
+    - Check the error message
+    - Common fix: railway logs (to see what's wrong)
+
+If app doesn't work after deployment:
+    - Run: railway logs
+    - Look for error messages
+    - Common issue: Missing environment variables
+
+================================================================================

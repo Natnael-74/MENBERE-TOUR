@@ -1,0 +1,74 @@
+extends base
+
+block content
+  main.main
+    section.overview
+      .card-container
+        each tour in tours
+          .card
+            .card__header
+              .card__picture
+                .card__picture-overlay &nbsp;
+                img.card__picture-img(
+                  src=tour.imageCover ? `/img/tours/${tour.imageCover}` : '/img/default-tour.jpg',
+                  alt=tour.name || 'Tour'
+                )
+              h3.heading-tertiary
+                span= tour.name || 'Unnamed Tour'
+
+            .card__details
+              h4.card__sub-heading= `${tour.difficulty || 'N/A'} ${tour.duration || 'N/A'}-day tour`
+              p.card__text= tour.summary || 'No description available'
+              
+              .card__data
+                svg.card__icon
+                  use(xlink:href='/img/icons.svg#icon-map-pin')
+                span= tour.startLocation ? tour.startLocation.description : 'Location TBD'
+
+              .card__data
+                svg.card__icon
+                  use(xlink:href='/img/icons.svg#icon-calendar')
+                - var startDate = (tour.startDates && tour.startDates.length) ? tour.startDates[0] : null
+                span= startDate ? startDate.toLocaleString('en-us', { month: 'long', year: 'numeric' }) : 'TBA'
+
+              .card__data
+                svg.card__icon
+                  use(xlink:href='/img/icons.svg#icon-flag')
+                span= (tour.locations && tour.locations.length) ? `${tour.locations.length} stops` : 'N/A'
+
+              .card__data
+                svg.card__icon
+                  use(xlink:href='/img/icons.svg#icon-user')
+                span= tour.maxGroupSize ? `${tour.maxGroupSize} people` : 'N/A'
+
+            .card__footer
+              p
+                span.card__footer-value= tour.price ? `$${tour.price}` : '$N/A'
+                | 
+                span.card__footer-text per person
+
+              p.card__ratings
+                span.card__footer-value= tour.ratingsAverage || 'N/A'
+                | 
+                span.card__footer-text= `rating (${tour.ratingsQuantity || 0})`
+
+              a.btn.btn--green.btn--small(href=`/tour/${tour.slug || '#'}`) Details
+      
+      if totalPages > 1
+        .pagination
+          if hasPrevPage
+            a.pagination__btn.pagination__btn--prev(href=`/?page=${currentPage - 1}${query ? `&search=${query}` : ''}`)
+              svg.pagination__icon
+                use(xlink:href='/img/icons.svg#icon-arrow-left')
+              span Previous
+          
+          .pagination__info
+            span.pagination__current= currentPage
+            span.pagination__separator /
+            span.pagination__total= totalPages
+          
+          if hasNextPage
+            a.pagination__btn.pagination__btn--next(href=`/?page=${currentPage + 1}${query ? `&search=${query}` : ''}`)
+              span Next
+              svg.pagination__icon
+                use(xlink:href='/img/icons.svg#icon-arrow-right')

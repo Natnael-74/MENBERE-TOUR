@@ -1,0 +1,53 @@
+extends base
+
+mixin navItem(link, text, icon, active)
+  li(class=`${active ? 'side-nav--active' : ''}`)
+    a(href=`${link}`)
+      svg
+        use(xlink:href=`img/icons.svg#icon-${icon}`)
+      | #{text}
+
+block content
+  main.main
+    .user-view
+      nav.user-view__menu
+        ul.side-nav
+          +navItem('/me', 'Settings', 'settings')
+          +navItem('/my-tours', 'My bookings', 'briefcase')
+          +navItem('/my-reviews', 'My reviews', 'star', true)
+          +navItem('#', 'Billing', 'credit-card')
+
+        - if (user.role === 'admin')
+          .admin-nav
+            h5.admin-nav__heading Admin
+            ul.side-nav
+              +navItem('#', 'Manage tours', 'map')
+              +navItem('#', 'Manage users', 'users')
+              +navItem('#', 'Manage reviews', 'star')
+              +navItem('#', 'Manage bookings', 'briefcase')
+
+      .user-view__content
+        .user-view__form-container
+          h2.heading-secondary.ma-bt-md Edit or Delete Review
+          
+          form.form.form-edit-review#edit-review-form
+            .form__group
+              label.form__label(for='review') Review
+              textarea#review.form__input(
+                name='review',
+                rows='5',
+                required
+              )= review.review
+            
+            .form__group
+              label.form__label(for='rating') Rating
+              select#rating.form__input(name='rating', required)
+                option(value='1', selected=review.rating === 1) 1 - Poor
+                option(value='2', selected=review.rating === 2) 2 - Fair
+                option(value='3', selected=review.rating === 3) 3 - Good
+                option(value='4', selected=review.rating === 4) 4 - Very Good
+                option(value='5', selected=review.rating === 5) 5 - Excellent
+            
+            .form__group.form__group--horizontal.edit__delete__form
+              button.btn.btn--green(type='submit') Update Review
+              button.btn.btn--red#delete-review-btn(type='button') Delete Review
