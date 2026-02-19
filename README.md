@@ -80,31 +80,7 @@ The platform allows users to explore tours, book securely online, leave reviews,
 
 ## 📡 API Overview
 
-### Tours
 
-GET /api/v1/tours
-POST /api/v1/tours
-PATCH /api/v1/tours/:id
-DELETE /api/v1/tours/:id
-
-### Users
-
-POST /api/v1/users/signup
-POST /api/v1/users/login
-POST /api/v1/users/forgotPassword
-PATCH /api/v1/users/resetPassword/:token
-
-### Reviews
-
-GET /api/v1/reviews
-POST /api/v1/reviews
-
-### Bookings
-
-POST /api/v1/bookings
-GET /api/v1/bookings
-
----
 
 ## 📦 Installation
 
@@ -217,30 +193,19 @@ Architecture follows the MVC (Model–View–Controller) design pattern.
 
 ## 📸 Screenshots
 
-Add screenshots here once deployed
+
 
 Example:
 
-![Homepage](./public/img/homepage.png)
-![Tour Details](./public/img/tour.png)
+![Homepage](./public/img/home-page.png)
+![Tour Details](./public/img/settings.png)
 
 ---
 
-## 🧠 What I Learned
-
-- Designing scalable REST APIs
-- Implementing authentication & authorization securely
-- Integrating Stripe payments
-- Handling production vs development environments
-- Writing secure and maintainable backend code
-- Structuring large Express applications professionally
-
----
 
 ## 👨‍💻 Author
 
 **Natnael Endale**
 Software Engineering Student – Addis Ababa University
-MERN Stack Developer | Backend Enthusiast
 
 GitHub: https://github.com/Natnael-74
