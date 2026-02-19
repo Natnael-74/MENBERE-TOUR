@@ -18,6 +18,12 @@ The platform allows users to explore tours, book securely online, leave reviews,
 
 🔗 _Add your deployed link here (Render / Railway / Heroku)_
 
+## 📚 API Documentation
+
+View the complete API documentation on Postman:
+
+[![Postman](https://img.shields.io/badge/Postman-API-orange?style=for-the-badge&logo=postman)](https://documenter.getpostman.com/view/47820490/2sBXcEizRf)
+
 ---
 
 ## ✨ Features
@@ -79,8 +85,6 @@ The platform allows users to explore tours, book securely online, leave reviews,
 ---
 
 ## 📡 API Overview
-
-
 
 ## 📦 Installation
 
@@ -193,15 +197,12 @@ Architecture follows the MVC (Model–View–Controller) design pattern.
 
 ## 📸 Screenshots
 
-
-
 Example:
 
 ![Homepage](./public/img/home-page.png)
 ![Tour Details](./public/img/settings.png)
 
 ---
-
 
 ## 👨‍💻 Author
 
