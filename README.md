@@ -16,7 +16,7 @@ The platform allows users to explore tours, book securely online, leave reviews,
 
 ## 🚀 Live Demo
 
-🔗 _Add your deployed link here (Render / Railway / Heroku)_
+🔗 https://menbere-tour.onrender.com/
 
 ## 📚 API Documentation
 
