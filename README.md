@@ -221,8 +221,8 @@ Add screenshots here once deployed
 
 Example:
 
-![Homepage](./public/img/homepage.png)
-![Tour Details](./public/img/tour.png)
+![Homepage](./public/img/home-page.png)
+![Tour Details](./public/img/settings.png)
 
 ---
 
