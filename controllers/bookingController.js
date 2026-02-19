@@ -24,9 +24,21 @@ export const updateBooking = updateOne(Booking);
 
 export const deleteBooking = deleteOne(Booking);
 
-const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
-// eslint-disable-next-line import/prefer-default-export
+// Lazy initialization of Stripe - only when needed
+let stripe;
+const getStripe = () => {
+  if (!stripe) {
+    const key = process.env.STRIPE_SECRET_KEY;
+    if (!key) {
+      throw new Error('STRIPE_SECRET_KEY environment variable is not set');
+    }
+    stripe = new Stripe(key);
+  }
+  return stripe;
+};
+
 export const getCheckoutSession = catchAsync(async (req, res, next) => {
+  const stripeInstance = getStripe();
   // 1) Get the currently booked tour
   const tour = await Tour.findById(req.params.tourId);
 
@@ -34,7 +46,7 @@ export const getCheckoutSession = catchAsync(async (req, res, next) => {
   if (!tour) return next(new Error('No tour found with that ID.'));
 
   // 2) Create checkout session
-  const session = await stripe.checkout.sessions.create({
+  const session = await stripeInstance.checkout.sessions.create({
     payment_method_types: ['card'],
     mode: 'payment', // ensure it's payment mode
     success_url: `${req.protocol}://${req.get('host')}/?tour=${req.params.tourId}&user=${req.user.id}&price=${tour.price}`,
