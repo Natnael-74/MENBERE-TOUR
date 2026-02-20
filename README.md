@@ -109,44 +109,10 @@ cd MENBERE-TOUR
 npm install
 ```
 
-### 3️⃣ Environment Configuration
-
-Create a config.env file in the root directory:
-
-```env
-NODE_ENV=development
-PORT=3000
-
-# Database (MongoDB Atlas)
-DATABASE=mongodb+srv://<username>:<password>@cluster0.xxxxxx.mongodb.net/?appName=Cluster0
-DATABASE_PASSWORD=<your_password>
-
-# Local Database (optional)
-DATABASE_LOCAL=mongodb://localhost:27017/Menbere-Tour
-
-# JWT
-JWT_SECRET=<your_secure_random_string>
-JWT_EXPIRES_IN=90d
-JWT_COOKIE_EXPIRES_IN=90
-
-# Email
-EMAIL_HOST=sandbox.smtp.mailtrap.io
-EMAIL_PORT=2525
-EMAIL_USERNAME=<your_username>
-EMAIL_PASSWORD=<your_password>
-EMAIL_FROM=your_email@example.com
-
-# Stripe
-STRIPE_SECRET_KEY=sk_test_xxx
-```
 
 ### 4️⃣ Run the Application
 
-Development mode:
 
-```bash
-npm run start:dev
-```
 
 Production mode:
 
@@ -160,20 +126,6 @@ Visit:
 http://localhost:3000
 ```
 
-### 5️⃣ Import Sample Data
-
-```bash
-cd dev-data/data
-node importDevData.js --import
-```
-
-To delete data:
-
-```bash
-node importDevData.js --delete
-```
-
----
 
 ## 🗂 Project Structure
 
